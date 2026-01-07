@@ -1,11 +1,11 @@
 package routers
 
-import "github.com/gofiber/fiber/v2"
+import "gofr.dev/pkg/gofr"
 
 type RouterImpls struct {
-	route fiber.Router
+	app *gofr.App
 }
 
-func NewRoute(r fiber.Router) RouterImpls {
-	return RouterImpls{r}
+func NewRoute(app *gofr.App) RouterImpls {
+	return RouterImpls{app: app}
 }

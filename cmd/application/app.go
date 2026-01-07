@@ -4,13 +4,12 @@ import (
 	"github.com/billowdev/email-job-temporal/internal/adapters/http/handlers"
 	"github.com/billowdev/email-job-temporal/internal/adapters/http/routers"
 	"github.com/billowdev/email-job-temporal/internal/core/services"
-	"github.com/gofiber/fiber/v2"
+	"gofr.dev/pkg/gofr"
 	"go.temporal.io/sdk/client"
 )
 
-func AppContainer(app *fiber.App, temporalClient client.Client) *fiber.App {
-	v1 := app.Group("/v1")
-	route := routers.NewRoute(v1)
+func AppContainer(app *gofr.App, temporalClient client.Client) *gofr.App {
+	route := routers.NewRoute(app)
 	EmailApp(route, temporalClient)
 	return app
 }

@@ -1,44 +1,95 @@
 package emailtemplates
 
 var TEST_HTML_TEMPLATE = `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Welcome to Billowdev</title>
+	<!--[if mso]>
+	<style type="text/css">
+		body, table, td {font-family: Arial, sans-serif !important;}
+	</style>
+	<![endif]-->
 </head>
-<body>
-	<table width="100%" cellpadding="0" cellspacing="0" style="font-family: Arial, sans-serif;">
+<body style="margin: 0; padding: 0; background-color: #f5f7fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+	<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f7fa; padding: 40px 0;">
 		<tr>
-			<td align="center" bgcolor="#f4f4f4">
-				<table width="600" cellpadding="10" cellspacing="0" style="background-color: #ffffff;">
-					<!-- Header -->
+			<td align="center">
+				<!-- Main Container -->
+				<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden; max-width: 600px;">
+					<!-- Header with Gradient -->
 					<tr>
-						<td bgcolor="#6093E2" align="center" style="color: #ffffff; padding: 10px;">
-							<h1>Your Test Email</h1>
+						<td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center;">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td align="center" style="padding-bottom: 20px;">
+										<img src="https://yt3.googleusercontent.com/PFmOY2nzI91G1-J6fSj_uVO0KmspprKjAbvMhA3vznSKMy-n3yG9eFDTSMLSYT0T1ELWJkPTLA=s176-c-k-c0x00ffffff-no-rj" alt="Billowdev Logo" style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.3); display: block; margin: 0 auto;" />
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">Welcome to Billowdev</h1>
+										<p style="margin: 10px 0 0 0; color: rgba(255, 255, 255, 0.9); font-size: 16px; font-weight: 300;">Your Test Email</p>
+									</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
 
-				<div style="width: max-content; margin: 0 auto; text-align: center">
-					<img
-					  style="width: 25%; margin-bottom: 5px"
-					  src="https://yt3.googleusercontent.com/PFmOY2nzI91G1-J6fSj_uVO0KmspprKjAbvMhA3vznSKMy-n3yG9eFDTSMLSYT0T1ELWJkPTLA=s176-c-k-c0x00ffffff-no-rj"
-					/>
-				  </div>
-
-					<!-- Content -->
+					<!-- Content Area -->
 					<tr>
-						<td style="padding: 20px;">
-							<p>Dear {{.CustomerName}},</p>
-							
-							<p>Your test email</p>
+						<td style="padding: 50px 40px; background-color: #ffffff;">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<p style="margin: 0 0 20px 0; color: #2d3748; font-size: 18px; line-height: 1.6; font-weight: 500;">Dear {{.CustomerName}},</p>
+										
+										<p style="margin: 0 0 25px 0; color: #4a5568; font-size: 16px; line-height: 1.8;">We're thrilled to have you here! This is your test email to ensure everything is working perfectly.</p>
 
-							<p>Best regards,</p>
-							<p>Billowdev Team</p>
+										<!-- Decorative Divider -->
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+											<tr>
+												<td align="center" style="padding: 20px 0;">
+													<div style="width: 60px; height: 3px; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 2px; margin: 0 auto;"></div>
+												</td>
+											</tr>
+										</table>
+
+										<p style="margin: 0 0 10px 0; color: #4a5568; font-size: 16px; line-height: 1.8;">If you have any questions or need assistance, feel free to reach out to us.</p>
+
+										<p style="margin: 30px 0 10px 0; color: #2d3748; font-size: 16px; line-height: 1.8; font-weight: 500;">Best regards,</p>
+										<p style="margin: 0; color: #667eea; font-size: 16px; line-height: 1.8; font-weight: 600;">The Billowdev Team</p>
+									</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
+
 					<!-- Footer -->
 					<tr>
-						<td bgcolor="#6093E2" align="center" style="color: #ffffff; padding: 10px;">
-							<p>&copy; 2024 Billowdev. All rights reserved.</p>
+						<td style="background-color: #f7fafc; padding: 30px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td align="center" style="padding-bottom: 15px;">
+										<p style="margin: 0; color: #718096; font-size: 14px; line-height: 1.6;">&copy; 2024 Billowdev. All rights reserved.</p>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<p style="margin: 0; color: #a0aec0; font-size: 12px; line-height: 1.6;">Thank you for being part of our community</p>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+
+				<!-- Bottom Spacing -->
+				<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top: 20px;">
+					<tr>
+						<td align="center" style="padding: 0 20px;">
+							<p style="margin: 0; color: #a0aec0; font-size: 12px; line-height: 1.6;">This email was sent to you by Billowdev</p>
 						</td>
 					</tr>
 				</table>

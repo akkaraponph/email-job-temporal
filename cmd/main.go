@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"log/slog"
 
@@ -25,14 +24,10 @@ func main() {
 		log.Fatal("Failed to start Temporal worker:", err)
 	}
 	defer temporalClient.Close()
-	params := configs.NewFiberHttpServiceParams()
-	fiberConfig := configs.NewFiberHTTPService(params)
-	httpFiber := application.AppContainer(fiberConfig, temporalClient)
-	portString := fmt.Sprintf(":%v", params.Port)
-	err = httpFiber.Listen(portString)
-	if err != nil {
-		log.Fatal("Failed to start golang Fiber server:", err)
-	}
+	params := configs.NewGoFrHttpServiceParams()
+	gofrApp := configs.NewGoFrHTTPService(params)
+	httpApp := application.AppContainer(gofrApp, temporalClient)
+	httpApp.Run()
 }
 
 // func main() {

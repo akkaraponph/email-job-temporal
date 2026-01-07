@@ -3,48 +3,38 @@ package configs
 import (
 	"fmt"
 	"log"
-	"strings"
+	"os"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/logger"
+	"gofr.dev/pkg/gofr"
 )
 
-type FiberHttpServiceParams struct {
+type GoFrHttpServiceParams struct {
 	Port    string
 	Address string
 }
 
-func NewFiberHttpServiceParams() *FiberHttpServiceParams {
-	fmt.Println("FIBER HTTP PORT = ", SERVER_HTTP_PORT)
-	return &FiberHttpServiceParams{
+func NewGoFrHttpServiceParams() *GoFrHttpServiceParams {
+	fmt.Println("GOFR HTTP PORT = ", SERVER_HTTP_PORT)
+	return &GoFrHttpServiceParams{
 		Port:    SERVER_HTTP_PORT,
 		Address: "",
 	}
 }
 
-func NewFiberHTTPService(params *FiberHttpServiceParams) *fiber.App {
-	app := fiber.New(fiber.Config{
-		Prefork:   false,
-		BodyLimit: 200 * 1024 * 1024,
-	})
-	app.Use(logger.New())
-	// storageservice.NewS3Client(configs.S3REGION)
-	// app.Use(requestid.New())
-	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*",
-		AllowMethods: strings.Join([]string{
-			fiber.MethodGet,
-			fiber.MethodPost,
-			fiber.MethodHead,
-			fiber.MethodPut,
-			fiber.MethodDelete,
-			fiber.MethodPatch,
-		}, ","),
-		AllowHeaders: "*",
-	}))
+func NewGoFrHTTPService(params *GoFrHttpServiceParams) *gofr.App {
+	// Set port in environment for GoFr to pick up
+	if params.Port != "" {
+		os.Setenv("HTTP_PORT", params.Port)
+	}
 
-	log.Printf("Launching Fiber HTTP listener on port [%s]...", params.Port)
+	// GoFr automatically handles observability (logs, metrics, traces)
+	// and REST standards, so we don't need to configure logger middleware
+	app := gofr.New()
+
+	// Note: CORS can be configured via environment variables or custom middleware if needed
+	// GoFr follows REST standards by default
+
+	log.Printf("Launching GoFr HTTP listener on port [%s]...", params.Port)
 
 	return app
 }
