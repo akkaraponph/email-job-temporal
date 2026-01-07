@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/billowdev/email-job-temporal/internal/core/domain"
-	helpers "github.com/billowdev/email-job-temporal/pkg/helpers/email"
+	"github.com/akkaraponph/email-job-temporal/internal/core/domain"
+	helpers "github.com/akkaraponph/email-job-temporal/pkg/helpers/email"
 	"go.temporal.io/sdk/activity"
 	"gorm.io/gorm"
 )

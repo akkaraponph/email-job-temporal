@@ -4,9 +4,9 @@ import (
 	"context"
 	"log"
 
-	"github.com/billowdev/email-job-temporal/internal/adapters/temporal/workflows"
-	"github.com/billowdev/email-job-temporal/internal/core/domain"
-	"github.com/billowdev/email-job-temporal/internal/core/ports"
+	"github.com/akkaraponph/email-job-temporal/internal/adapters/temporal/workflows"
+	"github.com/akkaraponph/email-job-temporal/internal/core/domain"
+	"github.com/akkaraponph/email-job-temporal/internal/core/ports"
 	"github.com/google/uuid"
 	"go.temporal.io/sdk/client"
 )

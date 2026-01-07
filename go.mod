@@ -1,4 +1,4 @@
-module github.com/billowdev/email-job-temporal
+module github.com/akkaraponph/email-job-temporal
 
 go 1.25.5
 

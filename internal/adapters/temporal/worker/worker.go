@@ -4,9 +4,9 @@ import (
 	"log"
 	"log/slog"
 
-	"github.com/billowdev/email-job-temporal/internal/adapters/temporal/activities"
-	"github.com/billowdev/email-job-temporal/internal/adapters/temporal/workflows"
-	"github.com/billowdev/email-job-temporal/pkg/configs"
+	"github.com/akkaraponph/email-job-temporal/internal/adapters/temporal/activities"
+	"github.com/akkaraponph/email-job-temporal/internal/adapters/temporal/workflows"
+	"github.com/akkaraponph/email-job-temporal/pkg/configs"
 	"go.temporal.io/sdk/client"
 	temporalLog "go.temporal.io/sdk/log"
 	"go.temporal.io/sdk/worker"

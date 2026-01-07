@@ -1,11 +1,11 @@
 package application
 
 import (
-	"github.com/billowdev/email-job-temporal/internal/adapters/http/handlers"
-	"github.com/billowdev/email-job-temporal/internal/adapters/http/routers"
-	"github.com/billowdev/email-job-temporal/internal/core/services"
-	"gofr.dev/pkg/gofr"
+	"github.com/akkaraponph/email-job-temporal/internal/adapters/http/handlers"
+	"github.com/akkaraponph/email-job-temporal/internal/adapters/http/routers"
+	"github.com/akkaraponph/email-job-temporal/internal/core/services"
 	"go.temporal.io/sdk/client"
+	"gofr.dev/pkg/gofr"
 )
 
 func AppContainer(app *gofr.App, temporalClient client.Client) *gofr.App {

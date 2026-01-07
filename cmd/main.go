@@ -4,8 +4,8 @@ import (
 	"log"
 	"log/slog"
 
-	"github.com/billowdev/email-job-temporal/cmd/application"
-	"github.com/billowdev/email-job-temporal/pkg/configs"
+	"github.com/akkaraponph/email-job-temporal/cmd/application"
+	"github.com/akkaraponph/email-job-temporal/pkg/configs"
 	"go.temporal.io/sdk/client"
 	temporalLog "go.temporal.io/sdk/log"
 )

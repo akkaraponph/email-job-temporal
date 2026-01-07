@@ -12,7 +12,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/billowdev/email-job-temporal/pkg/configs"
+	"github.com/akkaraponph/email-job-temporal/pkg/configs"
 )
 
 func sendEmailHelper(conn *smtp.Client, from, to, msg string) error {

@@ -3,9 +3,9 @@ package handlers
 import (
 	"fmt"
 
-	"github.com/billowdev/email-job-temporal/internal/core/domain"
-	"github.com/billowdev/email-job-temporal/internal/core/ports"
-	"github.com/billowdev/email-job-temporal/pkg/configs"
+	"github.com/akkaraponph/email-job-temporal/internal/core/domain"
+	"github.com/akkaraponph/email-job-temporal/internal/core/ports"
+	"github.com/akkaraponph/email-job-temporal/pkg/configs"
 	"gofr.dev/pkg/gofr"
 )
 

@@ -3,8 +3,8 @@ package workflows
 import (
 	"time"
 
-	"github.com/billowdev/email-job-temporal/internal/adapters/temporal/activities"
-	"github.com/billowdev/email-job-temporal/internal/core/domain"
+	"github.com/akkaraponph/email-job-temporal/internal/adapters/temporal/activities"
+	"github.com/akkaraponph/email-job-temporal/internal/core/domain"
 	"go.temporal.io/sdk/temporal"
 	"go.temporal.io/sdk/workflow"
 )
