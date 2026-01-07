@@ -1,78 +1,78 @@
 package main
 
 import (
+	"context"
 	"log"
 	"log/slog"
+	"os"
+	"os/signal"
+	"sync"
+	"syscall"
 
 	"github.com/akkaraponph/email-job-temporal/cmd/application"
+	"github.com/akkaraponph/email-job-temporal/internal/adapters/temporal/worker"
 	"github.com/akkaraponph/email-job-temporal/pkg/configs"
 	"go.temporal.io/sdk/client"
 	temporalLog "go.temporal.io/sdk/log"
 )
 
 func main() {
+	_, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
 	logger := temporalLog.NewStructuredLogger(slog.Default())
 	hostPort := client.DefaultHostPort
 	if configs.TEMPORAL_CLIENT_URL != "" {
 		hostPort = configs.TEMPORAL_CLIENT_URL
 	}
+
 	temporalClient, err := client.Dial(client.Options{
-		HostPort: hostPort,
-		Logger:   logger,
+		HostPort:  hostPort,
+		Namespace: configs.TEMPORAL_NAMESPACE,
+		Logger:    logger,
 	})
 	if err != nil {
-		log.Fatal("Failed to start Temporal worker:", err)
+		log.Fatal("Failed to create Temporal client:", err)
 	}
 	defer temporalClient.Close()
+
+	var wg sync.WaitGroup
+
+	// Start Temporal worker in a goroutine
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		worker.RegisterTemporalWorkflow(temporalClient)
+	}()
+
+	// Initialize HTTP application
 	params := configs.NewGoFrHttpServiceParams()
 	gofrApp := configs.NewGoFrHTTPService(params)
 	httpApp := application.AppContainer(gofrApp, temporalClient)
-	httpApp.Run()
+
+	// Start HTTP application in a goroutine
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		httpApp.Run()
+	}()
+
+	// Set up signal handling for graceful shutdown
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+
+	// Wait for shutdown signal
+	sig := <-sigChan
+	log.Printf("Received signal: %v, shutting down...", sig)
+
+	// Cancel context to signal shutdown
+	cancel()
+
+	// Close Temporal client (this will stop the worker)
+	temporalClient.Close()
+
+	// Wait for goroutines to finish
+	wg.Wait()
+
+	log.Println("Shutdown complete")
 }
-
-// func main() {
-// 	var wg sync.WaitGroup
-// 	logger := temporalLog.NewStructuredLogger(slog.Default())
-// 	hostPort := func() string {
-// 		if configs.TEMPORAL_CLIENT_URL != "" {
-// 			return configs.TEMPORAL_CLIENT_URL
-// 		}
-// 		return client.DefaultHostPort
-// 	}()
-// 	temporalClient, err := client.Dial(client.Options{
-// 		HostPort: hostPort,
-// 		Logger:   logger,
-// 	})
-
-// 	worker.RegisterTemporalWorkflow(temporalClient)
-// 	if err != nil {
-// 		log.Fatal("Failed to start Temporal worker:", err)
-// 	}
-
-// 	defer temporalClient.Close()
-// 	wg.Add(1)
-// 	go func() {
-// 		defer wg.Done()
-
-// 		if err != nil {
-// 			log.Fatalln("Unable to create temporal workflow client", err)
-// 		}
-
-// 		worker.RegisterTemporalWorkflow(temporalClient)
-// 		if err != nil {
-// 			log.Fatal("Failed to start Temporal worker:", err)
-// 		}
-
-// 		defer temporalClient.Close()
-// 	}()
-
-// 	params := configs.NewFiberHttpServiceParams()
-// 	fiberConfig := configs.NewFiberHTTPService(params)
-// 	httpFiber := application.AppContainer(fiberConfig, temporalClient)
-// 	portString := fmt.Sprintf(":%v", params.Port)
-// 	err = httpFiber.Listen(portString)
-// 	if err != nil {
-// 		log.Fatal("Failed to start golang Fiber server:", err)
-// 	}
-// 	wg.Wait()
-// }

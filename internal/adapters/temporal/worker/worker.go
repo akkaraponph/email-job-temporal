@@ -26,9 +26,9 @@ func WorkflowClient() client.Client {
 	}()
 
 	c, err := client.Dial(client.Options{
-		// HostPort: client.DefaultHostPort,
-		HostPort: hostPort,
-		Logger:   logger,
+		HostPort:  hostPort,
+		Namespace: configs.TEMPORAL_NAMESPACE,
+		Logger:    logger,
 	})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)

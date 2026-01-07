@@ -9,6 +9,7 @@ import (
 
 var (
 	TEMPORAL_CLIENT_URL string
+	TEMPORAL_NAMESPACE  string
 	APP_API_VERSION     string
 	APP_NAME            string
 	APP_ENV             string
@@ -42,6 +43,10 @@ func init() {
 	APP_API_VERSION = "v2"
 	SERVER_HTTP_PORT = viper.GetString("SERVER_HTTP_PORT")
 	TEMPORAL_CLIENT_URL = viper.GetString("TEMPORAL_CLIENT_URL")
+	TEMPORAL_NAMESPACE = viper.GetString("TEMPORAL_NAMESPACE")
+	if TEMPORAL_NAMESPACE == "" {
+		TEMPORAL_NAMESPACE = "default"
+	}
 
 	var err error
 	APP_DEBUG_MODE, err = strconv.ParseBool(viper.GetString("APP_DEBUG_MODE"))
